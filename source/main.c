@@ -22,6 +22,8 @@ int currentPosition = 0;
 char* currentPlayer = "X";
 char* player1 = "X";
 char* player2 = "O";
+int player1Score = 0;
+int player2Score = 0;
 
 void drawGame(){
     int x = 0;
@@ -99,7 +101,12 @@ void checkWinner(){
     }
 
     if(gameWon){
-        printf(ANSI_COLOR_GREEN "\x1b[4;2H%s is the winner!" ANSI_COLOR_RESET, currentPlayer);
+        if(currentPlayer == player1){
+            player1Score++;
+        } else {
+            player2Score++;
+        }
+        printf(ANSI_COLOR_GREEN "\x1b[6;2H%s is the winner!" ANSI_COLOR_RESET, currentPlayer);
         resetGame();
     }
 }
@@ -109,11 +116,15 @@ int main(int argc, char **argv)
     gfxInitDefault();
     consoleInit(NULL);
 
-    printf("\x1b[2;2HPress PLUS to exit.");
-
     // Main loop
     while(appletMainLoop())
     {
+        printf("\x1b[2;60HPress PLUS to exit.");
+
+        // draw high scores
+        printf("\x1b[2;2HPlayer X Score: %i", player1Score);
+        printf("\x1b[4;2HPlayer O Score: %i", player2Score);
+
         hidScanInput();
         u64 isKeyDown = hidKeysDown(CONTROLLER_P1_AUTO);
 
@@ -149,7 +160,7 @@ int main(int argc, char **argv)
                     currentPlayer = player1;
                 }
             } else {
-                printf(ANSI_COLOR_RED "\x1b[100;2HSpace is already taken! Please choose another." ANSI_COLOR_RESET);  
+                printf(ANSI_COLOR_RED "\x1b[44;2HSpace is already taken! Please choose another." ANSI_COLOR_RESET);  
             }     
         }
 
