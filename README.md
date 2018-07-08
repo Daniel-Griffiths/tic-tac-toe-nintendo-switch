@@ -2,7 +2,7 @@
 
 A very basic implementation of TicTacToe for the Nintendo Switch, made as a test to learn homebrew development.
 
-<p align="center"><img src="/screenshot.jpg"/></p>
+<p align="center"><img src="screenshot.png"/></p>
 
 ## Compiling
 
