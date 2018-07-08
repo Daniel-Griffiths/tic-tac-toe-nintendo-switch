@@ -44,9 +44,9 @@ void drawGame(){
         // Draw the cell to the screen
         if(i == currentPosition){
             currentCell = currentPlayer;
-            printf(ANSI_COLOR_YELLOW "\x1b[%d;%dH%s" ANSI_COLOR_RESET, y + 20, x + 40, currentCell);  
+            printf(ANSI_COLOR_YELLOW "\x1b[%d;%dH%s" ANSI_COLOR_RESET, y + 20, x + 38, currentCell);  
         } else {
-            printf("\x1b[%d;%dH%s", y + 20, x + 40, currentCell); 
+            printf("\x1b[%d;%dH%s", y + 20, x + 38, currentCell); 
         }
     }
 }
@@ -94,12 +94,12 @@ void checkWinner(){
     }
 
     if(gameDraw){
-        printf(ANSI_COLOR_RED "\x1b[4;1HThe game is a draw!" ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_RED "\x1b[4;2HThe game is a draw!" ANSI_COLOR_RESET);
         resetGame();
     }
 
     if(gameWon){
-        printf(ANSI_COLOR_GREEN "\x1b[4;1H%s is the winner!" ANSI_COLOR_RESET, currentPlayer);
+        printf(ANSI_COLOR_GREEN "\x1b[4;2H%s is the winner!" ANSI_COLOR_RESET, currentPlayer);
         resetGame();
     }
 }
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
     gfxInitDefault();
     consoleInit(NULL);
 
-    printf("\x1b[2;1HPress PLUS to exit.");
+    printf("\x1b[2;2HPress PLUS to exit.");
 
     // Main loop
     while(appletMainLoop())
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
                     currentPlayer = player1;
                 }
             } else {
-                printf(ANSI_COLOR_RED "\x1b[100;1HSpace is already taken! Please choose another." ANSI_COLOR_RESET);  
+                printf(ANSI_COLOR_RED "\x1b[100;2HSpace is already taken! Please choose another." ANSI_COLOR_RESET);  
             }     
         }
 
