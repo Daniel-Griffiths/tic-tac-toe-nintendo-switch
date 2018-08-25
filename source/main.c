@@ -9,6 +9,7 @@
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
+#define MAX_CELLS 8
 
 char* defaultCell = "-";
 
@@ -25,11 +26,14 @@ char* player2 = "O";
 int player1Score = 0;
 int player2Score = 0;
 
+/**
+ * Draw the frame buffer to the screen
+ */
 void drawGame(){
     int x = 0;
     int y = 0;
 
-    for(unsigned int i = 0; i <= 8; i++ ){
+    for(unsigned int i = 0; i <= MAX_CELLS; i++ ){
 
         // Draw the current value of the cell
         char* currentCell = cells[i];
@@ -53,40 +57,40 @@ void drawGame(){
     }
 }
 
+/**
+ * Reset all cells and player position
+ */
 void resetGame(){
     currentPosition = 0;
-    cells[0] = defaultCell;
-    cells[1] = defaultCell;
-    cells[2] = defaultCell;
-    cells[3] = defaultCell;
-    cells[4] = defaultCell;
-    cells[5] = defaultCell;
-    cells[6] = defaultCell;
-    cells[7] = defaultCell;
-    cells[8] = defaultCell;
+    for(unsigned int i = 0; i <= MAX_CELLS; i++ ){
+		cells[i] = defaultCell;
+    }
 }
 
+/**
+ * Check if the player has won
+ */
 void checkWinner(){
 
     bool gameWon = false;
     bool gameDraw = false;
 
     // horizonal
-    if(cells[0] == currentPlayer && cells[1] == currentPlayer && cells[2] == currentPlayer) gameWon = true;
-    if(cells[3] == currentPlayer && cells[4] == currentPlayer && cells[5] == currentPlayer) gameWon = true;
-    if(cells[6] == currentPlayer && cells[7] == currentPlayer && cells[8] == currentPlayer) gameWon = true;
+    if((cells[0] == currentPlayer && cells[1] == currentPlayer && cells[2] == currentPlayer)
+    || (cells[3] == currentPlayer && cells[4] == currentPlayer && cells[5] == currentPlayer) 
+    || (cells[6] == currentPlayer && cells[7] == currentPlayer && cells[8] == currentPlayer) 
 
     // vertical
-    if(cells[0] == currentPlayer && cells[3] == currentPlayer && cells[6] == currentPlayer) gameWon = true;
-    if(cells[1] == currentPlayer && cells[4] == currentPlayer && cells[7] == currentPlayer) gameWon = true;
-    if(cells[2] == currentPlayer && cells[5] == currentPlayer && cells[8] == currentPlayer) gameWon = true;
+    || (cells[0] == currentPlayer && cells[3] == currentPlayer && cells[6] == currentPlayer) 
+    || (cells[1] == currentPlayer && cells[4] == currentPlayer && cells[7] == currentPlayer) 
+    || (cells[2] == currentPlayer && cells[5] == currentPlayer && cells[8] == currentPlayer) 
 
     // diagonal
-    if(cells[0] == currentPlayer && cells[4] == currentPlayer && cells[8] == currentPlayer) gameWon = true;
-    if(cells[2] == currentPlayer && cells[3] == currentPlayer && cells[6] == currentPlayer) gameWon = true;
+    || (cells[0] == currentPlayer && cells[4] == currentPlayer && cells[8] == currentPlayer) 
+    || (cells[2] == currentPlayer && cells[3] == currentPlayer && cells[6] == currentPlayer)) gameWon = true;
 
     // check if the game is a draw
-    for(unsigned int i = 0; i <= 8; i++ ){
+    for(unsigned int i = 0; i <= MAX_CELLS; i++ ){
         if(cells[i] == defaultCell){
             gameDraw = false;
             break;
@@ -111,6 +115,13 @@ void checkWinner(){
     }
 }
 
+/**
+ * Main app loop
+ * 
+ * @param  argc 
+ * @param  argv 
+ * @return
+ */
 int main(int argc, char **argv)
 {
     gfxInitDefault();
@@ -139,7 +150,7 @@ int main(int argc, char **argv)
 
         // ensure current positon is within bounds
         if(currentPosition < 0) currentPosition = 0;
-        if (currentPosition > 8) currentPosition = 8;
+        if (currentPosition > MAX_CELLS) currentPosition = MAX_CELLS;
 
         drawGame();
 
