@@ -28,8 +28,8 @@ char* cells[9] = {
 	"-", "-", "-"
 };
 
-int currentPosition = 0;
 char* currentPlayer = "X";
+int currentPosition = 0;
 int player1Score = 0;
 int player2Score = 0;
 
@@ -134,7 +134,10 @@ void changePlayer()
 	}
 }
 
-void gameUpdate()
+/**
+ * Main game update loop
+ */
+void update()
 {
 	u64 key = hidKeysDown(CONTROLLER_P1_AUTO);
 
@@ -142,10 +145,10 @@ void gameUpdate()
     if (key & KEY_PLUS) gameRunning = false; 
 
     // move the player position
-    if (key & KEY_RIGHT) currentPosition++;
-    if (key & KEY_LEFT) currentPosition--;
-    if (key & KEY_UP) currentPosition-=3;
-    if (key & KEY_DOWN) currentPosition+=3;
+    if (key & KEY_RIGHT) 	currentPosition++;
+    if (key & KEY_LEFT) 	currentPosition--;
+    if (key & KEY_UP) 		currentPosition-=3;
+    if (key & KEY_DOWN) 	currentPosition+=3;
 
     // ensure current positon is within bounds
     if(currentPosition < 0) currentPosition = 0;
@@ -181,7 +184,6 @@ int main(int argc, char **argv)
     gfxInitDefault();
     consoleInit(NULL);
 
-    // Main loop
     while(appletMainLoop())
     {
         // draw high scores
@@ -190,7 +192,7 @@ int main(int argc, char **argv)
         printf("\x1b[4;2HPlayer O Score: %i", player2Score);
 
         hidScanInput();
-        gameUpdate();
+        update();
 
         if(!gameRunning) break;
 
