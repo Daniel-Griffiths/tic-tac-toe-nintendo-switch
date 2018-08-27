@@ -112,11 +112,7 @@ void checkWinner(){
     }
 
     if(gameWon){
-        if(currentPlayer == player1){
-            player1Score++;
-        } else {
-            player2Score++;
-        }
+        (currentPlayer == player1) ? player1Score++ : player2Score++;
         printf(ANSI_COLOR_GREEN "\x1b[6;2H%s is the winner!" ANSI_COLOR_RESET, currentPlayer);
         resetGame();
     }
