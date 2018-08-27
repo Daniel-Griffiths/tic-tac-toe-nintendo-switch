@@ -127,11 +127,7 @@ void checkWinner(){
  */
 void changePlayer()
 {
-	if(currentPlayer == player1){
-	    currentPlayer = player2;
-	} else {
-	    currentPlayer = player1;
-	}
+	currentPlayer = (currentPlayer == player1) ? player2 : player1;
 }
 
 /**
